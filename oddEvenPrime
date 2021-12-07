@@ -1,0 +1,43 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	var num int
+	fmt.Print("enter the number")
+	fmt.Scan(&num)
+	oddEven(num)
+	prime(num)
+
+}
+
+func oddEven(num int) {
+
+	if num%2 == 0 {
+		fmt.Println(num, " is even")
+
+	} else {
+		fmt.Println(num, " is odd")
+	}
+}
+
+func prime(n int) {
+	//var i int
+	var f int
+	for i := 2; i <= n/2; i++ {
+		//fmt.Println(i)
+
+		if n%i == 0 {
+			//fmt.Println("not a prime number")
+			f = 1
+			break
+		}
+	}
+	if f == 0 {
+		fmt.Println("prime number")
+	} else {
+		fmt.Print("Not a prime number")
+	}
+}
