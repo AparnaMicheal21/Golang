@@ -1,0 +1,58 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	// var num1 int
+	// var num2 int
+	var n1 int
+	var n2 int
+	fmt.Print("enter the number")
+	fmt.Scan(&n1, &n2)
+
+	oddEven(n1, n2)
+	prime(n1, n2)
+
+}
+
+func oddEven(num1 int, num2 int) {
+	//var f int
+	fmt.Println("           Odd/Even          ")
+	for i := num1; i <= num2; i++ {
+
+		if i%2 == 0 {
+
+			fmt.Println(i, " is even")
+
+		} else {
+			fmt.Println(i, " is odd")
+		}
+
+	}
+
+}
+
+func prime(n1 int, n2 int) {
+	//var i int
+	fmt.Println("               Prime/Not            ")
+	for j := n1; j <= n2; j++ {
+		var f int
+		for i := 2; i <= j/2; i++ {
+
+			if j%i == 0 {
+				fmt.Println(j, "= not a prime")
+				f = 1
+				break
+
+			}
+
+		}
+
+		if f == 0 {
+			fmt.Println(j, "= prime")
+		}
+
+	}
+}
