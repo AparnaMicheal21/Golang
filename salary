@@ -1,0 +1,52 @@
+package main
+
+import "fmt"
+
+type employeeSalary interface {
+	calculateSalary() (string, int)
+}
+
+type employeeDetails struct {
+	empId        int
+	employeeName string
+	pf           int
+	sal          int
+}
+
+func main() {
+	details1 := employeeDetails{
+		empId:        1020,
+		employeeName: "Aparna",
+		pf:           2000,
+		sal:          18000,
+	}
+	details2 := employeeDetails{
+		empId:        1021,
+		employeeName: "Anu",
+		pf:           2000,
+		sal:          18000,
+	}
+	details3 := employeeDetails{
+		empId:        1022,
+		employeeName: "siva",
+		pf:           2000,
+		sal:          18000,
+	}
+	empdetails := []employeeSalary{details1, details2, details3}
+	printSalary(empdetails)
+}
+
+func printSalary(sal []employeeSalary) {
+	for _, val := range sal {
+		//fmt.Println(val)
+		name, s := val.calculateSalary()
+
+		fmt.Println("name =", name, "  salary = ", s)
+	}
+}
+
+func (empd employeeDetails) calculateSalary() (string, int) {
+
+	return empd.employeeName, empd.pf + empd.sal
+
+}
