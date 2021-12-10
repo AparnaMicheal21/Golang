@@ -2,9 +2,7 @@ package main
 
 import "fmt"
 
-type employeeSalary interface {
-	calculateSalary() (string, int)
-}
+
 
 type employeeDetails struct {
 	empId        int
@@ -32,11 +30,11 @@ func main() {
 		pf:           2000,
 		sal:          18000,
 	}
-	empdetails := []employeeSalary{details1, details2, details3}
+	empdetails := []employeeDetails{details1, details2, details3}
 	printSalary(empdetails)
 }
 
-func printSalary(sal []employeeSalary) {
+func printSalary(sal []employeeDetails) {
 	for _, val := range sal {
 		//fmt.Println(val)
 		name, s := val.calculateSalary()
