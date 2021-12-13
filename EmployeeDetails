@@ -1,0 +1,114 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
+)
+
+//type employ interface{}
+
+type Employee struct {
+	EmpId          int
+	EmpFirstName   string
+	EmpLastName    string
+	EmpEmailId     string
+	EmpMob         int
+	EmpDesignation string
+}
+
+func main() {
+
+	details1 := Employee{
+		EmpId:          101,
+		EmpFirstName:   "anu",
+		EmpLastName:    "joseph",
+		EmpEmailId:     "anu@gmail.com",
+		EmpMob:         677889999,
+		EmpDesignation: "sales officer",
+	}
+	details2 := Employee{
+		EmpId:          102,
+		EmpFirstName:   "anna",
+		EmpLastName:    "jomon",
+		EmpEmailId:     "anna@gmail.com",
+		EmpMob:         677889999,
+		EmpDesignation: "accoutant",
+	}
+	details3 := Employee{
+		EmpId:          103,
+		EmpFirstName:   "Ajay",
+		EmpLastName:    "Krishna",
+		EmpEmailId:     "ajay@gmail.com",
+		EmpMob:         677889999,
+		EmpDesignation: "store manager",
+	}
+
+	empdetails := []Employee{details1, details2, details3}
+	saveToFile("organization", empdetails)
+	readFromFile("organization")
+	//saveToFile("org", empdetails)
+
+}
+
+func saveToFile(fName string, e []Employee) {
+
+	b, _ := json.Marshal(e)
+	os.Remove(fName)
+
+	err := ioutil.WriteFile(fName, b, 777)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+}
+func readFromFile(f string) {
+
+	bs, err := ioutil.ReadFile(f)
+
+	if err != nil {
+		fmt.Print("Error is", err)
+		os.Exit(1)
+	}
+
+	//fmt.Println(bs)
+
+	var e []Employee
+	//fmt.Println(e)
+	err = json.Unmarshal(bs, &e)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	//fmt.Println(e)
+	search(e)
+
+}
+
+func search(e []Employee) {
+	var name, last string
+	var f int // default value zero
+	//	fmt.Println("searching", e)
+	fmt.Println("ENTER THE NAME")
+	fmt.Scan(&name)
+	fmt.Println("ENTER THE LAST NAME")
+	fmt.Scan(&last)
+	for _, val := range e {
+		//fmt.Println(val)
+
+		//if val.EmpFirstName == name && val.EmpLastName == last {
+		if strings.EqualFold(val.EmpFirstName, name) && strings.EqualFold(val.EmpLastName, last) {
+			fmt.Println("       Details Of Employee      ")
+			fmt.Println(val)
+			f = 1
+			break
+		}
+
+	}
+	if f == 0 {
+		fmt.Println(" UnEmployee")
+	}
+
+}
