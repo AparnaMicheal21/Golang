@@ -1,0 +1,123 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
+)
+
+type Employee struct {
+	EmpId          int
+	EmpFirstName   string
+	EmpLastName    string
+	EmpEmailId     string
+	EmpMob         int
+	EmpDesignation string
+}
+
+func main() {
+
+	details1 := Employee{
+		EmpId:          101,
+		EmpFirstName:   "anu",
+		EmpLastName:    "joseph",
+		EmpEmailId:     "anu@gmail.com",
+		EmpMob:         677889999,
+		EmpDesignation: "sales officer",
+	}
+	details2 := Employee{
+		EmpId:          102,
+		EmpFirstName:   "anna",
+		EmpLastName:    "jomon",
+		EmpEmailId:     "anna@gmail.com",
+		EmpMob:         677889999,
+		EmpDesignation: "accoutant",
+	}
+	details3 := Employee{
+		EmpId:          103,
+		EmpFirstName:   "Ajay",
+		EmpLastName:    "Krishna",
+		EmpEmailId:     "ajay@gmail.com",
+		EmpMob:         677889999,
+		EmpDesignation: "store manager",
+	}
+
+	empdetails := []Employee{details1, details2, details3}
+	saveToFile("organization", empdetails)
+	readFromFile("organizatio")
+
+}
+
+// details save to file
+func saveToFile(fName string, e []Employee) {
+
+	b, _ := json.Marshal(e)
+	os.Remove(fName)
+
+	err := ioutil.WriteFile(fName, b, 0777)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+}
+
+// details read from file
+func readFromFile(f string) {
+	var fileName string
+
+	bs, err := ioutil.ReadFile(f)
+
+	if err != nil {
+		fmt.Println("Error is  ", err)
+		fmt.Println("file doesn't exist,re-enter file name")
+		fmt.Println("file name")
+		fmt.Scan(&fileName)
+		readFromFile(fileName)
+	} else if _, err := os.Stat(f); err == nil {
+		fmt.Printf("File exists\n")
+
+		var e []Employee
+		err = json.Unmarshal(bs, &e)
+		// fmt.Print(e)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		search(e)
+
+	} //else {
+	// 	fmt.Printf("File does not exist\n")
+	// }
+}
+
+// search and print the details of employee
+func search(j []Employee) {
+	var name, last string
+
+	fmt.Println("ENTER THE NAME")
+	fmt.Scan(&name)
+
+	fmt.Println("ENTER THE LAST NAME")
+	fmt.Scan(&last)
+
+	var f int // default value zero
+	for _, val := range j {
+
+		//if val.EmpFirstName == name && val.EmpLastName == last {
+		if strings.EqualFold(val.EmpFirstName, name) && strings.EqualFold(val.EmpLastName, last) {
+			fmt.Println("       Details Of Employee      ")
+			fmt.Println(val)
+			f = 1
+			break
+		}
+	}
+
+	if f == 0 {
+		fmt.Println(" UnEmployee")
+
+	}
+
+}
