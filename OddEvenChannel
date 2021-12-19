@@ -43,13 +43,16 @@ func oddEven(val int, c1 chan int, i int, l int) {
 
 	if val%2 == 0 {
 		for j := 0; j < i; j++ {
-			time.Sleep((2 * time.Second))
+			time.Sleep(time.Second)
 		}
 		c1 <- val
 
 	} else {
+	        for j := 0; j < n; j++ {
+			time.Sleep(time.Second)
+		}
 		for j := 0; j < i; j++ {
-			time.Sleep((5 * time.Second))
+			time.Sleep(time.Second)
 		}
 
 		//time.Sleep(10 * time.Second)
